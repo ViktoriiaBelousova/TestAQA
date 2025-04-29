@@ -12,7 +12,7 @@ public class Main {
         cycle(4);
     }
         // метод cycle_for
-        private static void cycle(int count){
+        public static void cycle(int count){
         for (int i = 1; i <= count; i++) {
 
             // Press Shift+F9 to start debugging your code. We have set one breakpoint
