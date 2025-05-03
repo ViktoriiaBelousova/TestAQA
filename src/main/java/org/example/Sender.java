@@ -26,6 +26,7 @@ public class Sender {
                 actualBody);
     }
 
+
     // Пример использования
     public static void main(String[] args) {
         Sender sender = new Sender("example.com", "/api", "default body");
