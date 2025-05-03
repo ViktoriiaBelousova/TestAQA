@@ -1,6 +1,7 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class SenderTest {
@@ -50,6 +51,8 @@ class SenderTest {
             System.out.println("Все части ответа корректны!");
         }
     }
+
+    //проверка абсолютного совпадения
     @Test
     void testSendWithExactMatch() {
         Sender sender = new Sender("default.com", "/api", "default body");
@@ -65,5 +68,5 @@ class SenderTest {
     }
 
 
-    }
+}
 
