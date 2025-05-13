@@ -7,13 +7,28 @@ import java.util.List;
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
 
-
   public static void main(String[] args) {
     // Press Alt+Enter with your caret at the highlighted text to see how
     // IntelliJ IDEA suggests fixing it.
     System.out.println("Hello and welcome!");
 
-    cycle(10);
+//    cycle(10);
+
+    // Используем TextSender
+    TextSender textSender = new TextSender("example.com", "/api", "Hello, world!");
+    System.out.println(textSender.send());
+
+    // Используем параметры метода из старого класса Sender
+    System.out.println(textSender.send("https://github.com", "/ViktoriiaBelousova/TestAQA", "body"));
+    System.out.println(textSender.send("https://github.com", "/ViktoriiaBelousova/TestAQA"));
+    System.out.println(textSender.send());
+
+    // Используем JsonSender
+    JsonSender jsonSender = new JsonSender("api.example.com", "/users",
+      "{\"name\":\"John\",\"age\":30}");
+    System.out.println(jsonSender.send());
+    System.out.println("Pretty JSON:\n" + jsonSender.getPrettyJson());
+
   }
 
   // метод cycle_for

@@ -26,7 +26,7 @@ class SenderTest {
     // Создаем JSON с помощью Gson
     private static final String DEFAULT_BODY = createDefaultBody();
 
-    private Sender sender;
+    private TextSender sender;
 
     // Вспомогательный метод для создания JSON
     private static String createDefaultBody() {
@@ -39,7 +39,7 @@ class SenderTest {
 
     @BeforeEach
     void setUp() {
-        sender = new Sender(BASE_URL, DEFAULT_PATH, DEFAULT_BODY);
+        sender = new TextSender(BASE_URL, DEFAULT_PATH, DEFAULT_BODY);
         RestAssured.baseURI = BASE_URL;
     }
 
@@ -249,7 +249,7 @@ class SenderTest {
     // тест с падением на 1ой ошибке
     @Test
     void testSendWithConditions() {
-        Sender sender = new Sender("example.com", "/api", "default body");
+        TextSender sender = new TextSender("example.com", "/api", "default body");
         String result = sender.send("https://github.com", "/ViktoriiaBelousova/TestAQA", "body");
 
         // Проверка с if-else
@@ -267,7 +267,7 @@ class SenderTest {
     //тест когда собираем все ошибки(contains состоит из.. частичное совпадение)
     @Test
     void testSendWithAllErrorsReported() {
-        Sender sender = new Sender("example.com", "/api", "default body");
+        TextSender sender = new TextSender("example.com", "/api", "default body");
         String result = sender.send("https://github.com", "/ViktoriiaBelousova/TestAQA", "body");
 
         StringBuilder errors = new StringBuilder();
@@ -296,7 +296,7 @@ class SenderTest {
     //проверка абсолютного совпадения
     @Test
     void testSendWithExactMatch() {
-        Sender sender = new Sender("default.com", "/api", "default body");
+        TextSender sender = new TextSender("default.com", "/api", "default body");
 
         // Ожидаемый результат
         String expected = "По данному пути: https://github.com/ViktoriiaBelousova/TestAQA , отправлен запрос с телом: body";
