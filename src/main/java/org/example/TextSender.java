@@ -26,17 +26,4 @@ public class TextSender extends HttpSender {
       actualPath,
       actualBody);
   }
-
-  // Перегруженные методы send
-  public String send(String url, String path) {
-    return send(url, path, "test body");
-  }
-
-  public String send(String url) {
-    return send(url, "", "test body");
-  }
-
-  public String send() {
-    return send(null, null, null);
-  }
 }

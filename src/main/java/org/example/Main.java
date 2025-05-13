@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.interfaces.Sender;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,21 +16,26 @@ public class Main {
 
 //    cycle(10);
 
-    // Используем TextSender
-    TextSender textSender = new TextSender("example.com", "/api", "Hello, world!");
-    System.out.println(textSender.send());
-
-    // Используем параметры метода из старого класса Sender
-    System.out.println(textSender.send("https://github.com", "/ViktoriiaBelousova/TestAQA", "body"));
-    System.out.println(textSender.send("https://github.com", "/ViktoriiaBelousova/TestAQA"));
-    System.out.println(textSender.send());
-
-    // Используем JsonSender
-    JsonSender jsonSender = new JsonSender("api.example.com", "/users",
+    // Создаем базовые отправители
+    Sender textSender = new TextSender("example.com", "/api", "Hello, world!");
+    Sender jsonSender = new JsonSender("api.example.com", "/users",
       "{\"name\":\"John\",\"age\":30}");
-    System.out.println(jsonSender.send());
-    System.out.println("Pretty JSON:\n" + jsonSender.getPrettyJson());
 
+    // Используем полиморфизм - работаем через общий интерфейс
+    System.out.println("Текстовый отправитель: " + textSender.send());
+    System.out.println("JSON отправитель: " + jsonSender.send());
+
+    // Добавляем логирование (декоратор)
+    Sender loggingTextSender = new LoggingSender(textSender);
+    loggingTextSender.send("log.example.com", "/logs", "Важное сообщение");
+
+    // Добавляем шифрование (еще один декоратор)
+    Sender encryptedJsonSender = new EncryptedSender(jsonSender, "secret-key");
+    System.out.println(encryptedJsonSender.send());
+
+    // Комбинируем декораторы - логирование + шифрование
+    Sender secureLoggingSender = new LoggingSender(new EncryptedSender(textSender, "another-key"));
+    secureLoggingSender.send("secure.example.com", "/secure-api", "Секретные данные");
   }
 
   // метод cycle_for

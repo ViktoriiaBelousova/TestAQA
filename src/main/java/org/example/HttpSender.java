@@ -1,6 +1,8 @@
 package org.example;
 
-public abstract class HttpSender {
+import org.example.interfaces.Sender;
+
+public abstract class HttpSender implements Sender {
   protected final String url;
   protected final String path;
 
@@ -24,7 +26,24 @@ public abstract class HttpSender {
     return path;
   }
 
+  @Override
   public abstract String send(String url, String path, String body);
+
+  // Перегруженные методы send
+  @Override
+  public String send(String url, String path) {
+    return send(url, path, null);
+  }
+
+  @Override
+  public String send(String url) {
+    return send(url, null, null);
+  }
+
+  @Override
+  public String send() {
+    return send(null, null, null);
+  }
 
   // Общий метод для всех наследников
   protected String formatUrl(String url, String path) {
