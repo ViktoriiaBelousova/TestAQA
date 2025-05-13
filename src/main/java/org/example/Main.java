@@ -33,7 +33,7 @@ public class Main {
 //      } else {
 //        System.out.println("odd");
 //      }
-      String result = (i % 2 == 0) ? "even" : "not-even";
+//      String result = (i % 2 == 0) ? "even" : "not-even";
 //      System.out.println(result);
     }
     System.out.println("listNumbers = " + listNumbers);

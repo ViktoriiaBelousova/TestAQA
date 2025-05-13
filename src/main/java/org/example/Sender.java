@@ -1,9 +1,9 @@
 package org.example;
 
 public class Sender {
-    private String url;
-    private String path;
-    private String body;
+    private final String url;
+    private final String path;
+    private final String body;
 
     // Конструктор с параметрами
     public Sender(String url, String path, String body) {
@@ -33,6 +33,6 @@ public class Sender {
 
         // Используем параметры метода
          System.out.println(sender.send("https://github.com", "/ViktoriiaBelousova/TestAQA", "body"));
-        // Вывод: Отправлено на google.com/search с телом: query
+        // Вывод: Отправлено на https://github.com/ViktoriiaBelousova/TestAQA отправлен запрос с телом: body
     }
 }

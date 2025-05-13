@@ -59,6 +59,8 @@ class SenderTest {
           .then()
           .extract().response();
 
+        System.out.println("Response statusCode: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody().asString());
         // Проверяем, что запрос успешно выполнен
         assertEquals(201, response.statusCode(), "Статус код должен быть 201 для POST");
 
@@ -70,6 +72,8 @@ class SenderTest {
         assertEquals("foo", responseJson.get("title").getAsString());
         assertEquals("bar", responseJson.get("body").getAsString());
         assertEquals(1, responseJson.get("userId").getAsInt());
+
+        assertEquals(101, responseJson.get("id").getAsInt(), "id не соответствует ожидаемому");
 
         // Проверяем, что информация о запросе, предоставленная Sender,
         // соответствует фактически отправленному запросу
@@ -282,8 +286,8 @@ class SenderTest {
         }
 
         // Если есть ошибки - выводим все разом
-        if (errors.length() > 0) {
-            fail("Найдены ошибки:\n" + errors.toString());
+        if (!errors.isEmpty()) {
+            fail("Найдены ошибки:\n" + errors);
         } else {
             System.out.println("Все части ответа корректны!");
         }
