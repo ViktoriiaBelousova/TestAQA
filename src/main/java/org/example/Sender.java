@@ -20,7 +20,7 @@ public class Sender {
         String actualBody = (body != null && !body.isEmpty()) ? body : this.body;
 
         // Формируем результирующую строку
-        return String.format("По данному пути: %s%s , отправлен запрос с телом: %s",
+        return String.format("По данному пути: %s%s отправлен запрос с телом: %s",
                 actualUrl,
                 actualPath,
                 actualBody);
@@ -34,6 +34,5 @@ public class Sender {
         // Используем параметры метода
          System.out.println(sender.send("https://github.com", "/ViktoriiaBelousova/TestAQA", "body"));
         // Вывод: Отправлено на google.com/search с телом: query
-
     }
 }

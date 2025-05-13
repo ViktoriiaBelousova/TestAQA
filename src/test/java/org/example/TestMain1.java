@@ -15,7 +15,7 @@ public class TestMain1 {
     public void testCycle() {
         List<Integer> expectedList = Arrays.asList(0, 1, 2, 3, 4, 5, 6);
         List<Integer> actualList = Main.cycle(7);
-        assertEquals(expectedList, actualList, "cycle() должен возвращать числа от 1 до 7");
+        assertEquals(expectedList, actualList, "cycle() должен возвращать числа от 0 до 6");
     }
 
     @Test
