@@ -1,0 +1,105 @@
+{
+  "requestId": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "timestamp": "2023-11-15T14:32:17.123Z",
+  "status": {
+    "code": 200,
+    "message": "OK"
+  },
+  "data": {
+    "products": [
+      {
+        "id": 1001,
+        "name": "Смартфон XYZ Pro",
+        "price": 59999.99,
+        "inStock": true,
+        "category": "electronics",
+        "tags": ["smartphone", "5G", "new"],
+        "specifications": {
+          "display": "6.7 inch AMOLED",
+          "processor": "Snapdragon 8 Gen 2",
+          "ram": 12,
+          "storage": 256,
+          "camera": {
+            "main": 108,
+            "ultraWide": 48,
+            "telephoto": 12,
+            "front": 32
+          },
+          "battery": 5000
+        },
+        "variants": [
+          {
+            "color": "Black",
+            "sku": "XYZ-PRO-BLK",
+            "available": true
+          },
+          {
+            "color": "Silver",
+            "sku": "XYZ-PRO-SLV",
+            "available": false
+          }
+        ],
+        "rating": 4.8,
+        "reviews": 1243
+      },
+      {
+        "id": 1002,
+        "name": "Ноутбук ABC Ultra",
+        "price": 89999.99,
+        "inStock": false,
+        "category": "electronics",
+        "tags": ["laptop", "ultrabook", "premium"],
+        "specifications": {
+          "display": "15.6 inch 4K IPS",
+          "processor": "Intel Core i9-13900H",
+          "ram": 32,
+          "storage": 1024,
+          "gpu": "NVIDIA RTX 4080",
+          "battery": 8000
+        },
+        "variants": [
+          {
+            "color": "Space Gray",
+            "sku": "ABC-ULTRA-SG",
+            "available": false
+          }
+        ],
+        "rating": 4.9,
+        "reviews": 856
+      }
+    ],
+    "pagination": {
+      "currentPage": 1,
+      "totalPages": 5,
+      "itemsPerPage": 2,
+      "totalItems": 10
+    },
+    "filters": {
+      "priceRange": {
+        "min": 10000,
+        "max": 100000
+      },
+      "categories": ["electronics", "accessories", "software"],
+      "availability": "all"
+    }
+  },
+  "metadata": {
+    "apiVersion": "v2.3.1",
+    "processingTimeMs": 123.45,
+    "cacheHit": false,
+    "region": "eu-central",
+    "deprecationNotice": null,
+    "rateLimit": {
+      "limit": 100,
+      "remaining": 87,
+      "reset": 1699978800
+    }
+  },
+  "links": {
+    "self": "https://api.example.com/products?page=1&limit=2",
+    "next": "https://api.example.com/products?page=2&limit=2",
+    "prev": null,
+    "first": "https://api.example.com/products?page=1&limit=2",
+    "last": "https://api.example.com/products?page=5&limit=2"
+  }
+}

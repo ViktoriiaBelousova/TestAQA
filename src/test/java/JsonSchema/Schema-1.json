@@ -1,0 +1,276 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["requestId", "timestamp", "status", "data"],
+  "properties": {
+    "requestId": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 599
+        },
+        "message": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "data": {
+      "type": "object",
+      "required": ["products", "pagination"],
+      "properties": {
+        "products": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "price", "inStock", "category"],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "price": {
+                "type": "number",
+                "minimum": 1
+              },
+              "inStock": {
+                "type": "boolean"
+              },
+              "category": {
+                "type": "string",
+                "enum": ["electronics", "accessories", "software"]
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "specifications": {
+                "type": "object",
+                "required": ["display", "processor", "ram", "storage", "battery"],
+                "properties": {
+                  "display": {
+                    "type": "string"
+                  },
+                  "processor": {
+                    "type": "string"
+                  },
+                  "ram": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "storage": {
+                    "type": "integer",
+                    "minimum": 1
+                  },
+                  "camera": {
+                    "type": "object",
+                    "properties": {
+                      "main": {
+                        "type": "number",
+                        "minimum": 1
+                      },
+                      "ultraWide": {
+                        "type": "number",
+                        "minimum": 1
+                      },
+                      "telephoto": {
+                        "type": "number",
+                        "minimum": 1
+                      },
+                      "front": {
+                        "type": "number",
+                        "minimum": 1
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "gpu": {
+                    "type": "string"
+                  },
+                  "battery": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                },
+                "additionalProperties": false
+              },
+              "variants": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["color", "sku", "available"],
+                  "properties": {
+                    "color": {
+                      "type": "string"
+                    },
+                    "sku": {
+                      "type": "string",
+                      "pattern": "^[A-Z0-9-]+$"
+                    },
+                    "available": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "rating": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "reviews": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "pagination": {
+          "type": "object",
+          "required": ["currentPage", "totalPages", "itemsPerPage", "totalItems"],
+          "properties": {
+            "currentPage": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "totalPages": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "itemsPerPage": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "totalItems": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "filters": {
+          "type": "object",
+          "properties": {
+            "priceRange": {
+              "type": "object",
+              "required": ["min", "max"],
+              "properties": {
+                "min": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "max": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "additionalProperties": true
+            },
+            "categories": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": ["electronics", "accessories", "software"]
+              }
+            },
+            "availability": {
+              "type": "string",
+              "enum": ["all", "inStock", "outOfStock"]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "pattern": "^v\\d+\\.\\d+\\.\\d+$"
+        },
+        "processingTimeMs": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cacheHit": {
+          "type": "boolean"
+        },
+        "region": {
+          "type": "string"
+        },
+        "deprecationNotice": {
+          "type": ["string", "null"]
+        },
+        "rateLimit": {
+          "type": "object",
+          "required": ["limit", "remaining", "reset"],
+          "properties": {
+            "limit": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "remaining": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "reset": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "links": {
+      "type": "object",
+      "required": ["self", "first"],
+      "properties": {
+        "self": {
+          "type": "string",
+          "format": "uri"
+        },
+        "next": {
+          "type": ["string"],
+          "format": "uri"
+        },
+        "prev": {
+          "type": ["string", "null"],
+          "format": "uri"
+        },
+        "first": {
+          "type": "string",
+          "format": "uri"
+        },
+        "last": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
