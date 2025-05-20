@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -89,6 +90,7 @@ class SenderTest {
         // Создаем путь для получения конкретного поста
         String specificPath = "/posts/1";
 
+        String schemaPath = "schemas/response/api/post-single-schema.json";
         // Форматирование результата Sender
         String senderResult = sender.send(BASE_URL, specificPath, "");
         System.out.println("Sender result: " + senderResult);
@@ -98,6 +100,11 @@ class SenderTest {
           .when()
           .get(specificPath)
           .then()
+          .assertThat()
+          .statusCode(200)
+          // Добавляем проверку схемы JSON, если путь к схеме указан
+          .and()
+          .body(JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaPath))
           .extract().response();
 
         // Преобразуем JSON ответа в объект с помощью Gson
@@ -188,7 +195,7 @@ class SenderTest {
     @ParameterizedTest
     @MethodSource("provideEndpointsForTesting")
     @DisplayName("Параметризованный тест различных эндпоинтов JSONPlaceholder с Gson")
-    void testMultipleEndpoints(String path, String requestBody, int expectedStatusCode) {
+    void testMultipleEndpoints(String path, String requestBody, int expectedStatusCode, String schemaPath) {
         // Форматирование результата Sender
         String senderResult = sender.send(BASE_URL, path, requestBody != null ? requestBody : "");
         System.out.println("Sender result for " + path + ": " + senderResult);
@@ -203,6 +210,11 @@ class SenderTest {
               .when()
               .post(path)
               .then()
+              .assertThat()
+              .statusCode(expectedStatusCode)
+              // Добавляем проверку схемы JSON, если путь к схеме указан
+              .and()
+              .body(JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaPath))
               .extract().response();
         } else {
             // GET запрос
@@ -210,6 +222,8 @@ class SenderTest {
               .when()
               .get(path)
               .then()
+              .assertThat()
+              .statusCode(expectedStatusCode)
               .extract().response();
         }
 
@@ -234,12 +248,12 @@ class SenderTest {
         String postBody = new Gson().toJson(postJson);
 
         return Stream.of(
-          Arguments.of("/posts", null, 200),          // GET all posts
-          Arguments.of("/posts/1", null, 200),        // GET specific post
-          Arguments.of("/users", null, 200),          // GET all users
-          Arguments.of("/users/1", null, 200),        // GET specific user
-          Arguments.of("/comments?postId=1", null, 200), // GET comments with query param
-          Arguments.of("/posts", postBody, 201)       // POST new post
+          Arguments.of("/posts", null, 200, "schemas/response/api/posts-list-schema.json"),
+          Arguments.of("/posts/1", null, 200, "schemas/response/api/post-single-schema.json"),
+          Arguments.of("/users", null, 200, "schemas/response/api/users-list-schema.json"),
+          Arguments.of("/users/1", null, 200, "schemas/response/api/user-single-schema.json"),
+          Arguments.of("/comments?postId=1", null, 200, "schemas/response/api/comments-list-schema.json"),
+          Arguments.of("/posts", postBody, 201, "schemas/response/api/post-created-schema.json")
         );
     }
 
