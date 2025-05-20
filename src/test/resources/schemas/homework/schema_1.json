@@ -21,7 +21,12 @@
           "maximum": 599
         },
         "message": {
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "OK",
+            "CANCEL",
+            "ERROR"
+          ]
         }
       },
       "additionalProperties": false
